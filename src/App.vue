@@ -3,17 +3,26 @@
     <v-container>
       <v-row>
 
-           <v-col ><!-- v-for="(item, i) in news" v-bind:key="i" -->
+           <v-col cols = "12" sm = "4" v-for="(item, i) in news" v-bind:key="i">
             <v-card>
-              <v-img>
-                <v-card-title></v-card-title>
+              <v-img
+              v-bind:src = "item.urlToImage"
+              >
+                
               </v-img>
-
+              <v-card-title v-text = "item.title"></v-card-title>
               <v-card-text>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio dolorum illum accusamus eos nam atque placeat incidunt, repellendus facere tempora ratione omnis eius minus, quis autem beatae! Quis, reprehenderit aliquid distinctio corporis molestias excepturi! Maxime, nobis numquam. Similique, reiciendis tenetur voluptate sunt voluptatem assumenda eius asperiores, ipsum, eligendi sint perferendis.
+                  {{ item.content }}
                 </p>
               </v-card-text>
+
+              <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn plain color="deep-purple" v-bind:href="item.url">
+                <v-icon class="mr-2">mdi-link-variant</v-icon> Читать в источнике
+            </v-btn>
+            </v-card-actions>
             </v-card>
           </v-col>
 
@@ -34,15 +43,15 @@ export default {
   data: () => ({
     news: []
   }),
-  methods: () => ({
-    // getNews() {
-    //   this.axios.get('https://newsapi.org/v2/top-headlines?country=ru&apiKey=d7f41a32c26b4bbfb596d58b1a54c766&roistat_visit=3523472')       
-    //   .then((response) => {    
-    //     this.news = response.data.articles;
-    //     console.log(this.news[0])
-    //   })   
-    // },
-
+  methods: {
+    getNews() {
+      this.axios.get('https://newsapi.org/v2/top-headlines?country=us&apiKey=d7f41a32c26b4bbfb596d58b1a54c766')       
+      .then((response) => {    
+        this.news = response.data.articles;
+        console.log(this.news)
+      })   
+    },
+// https://newsapi.org/v2/top-headlines?country=ru&apiKey=d7f41a32c26b4bbfb596d58b1a54c766&roistat_visit=3523472
     // getNews() {
     //   this.axios.get('https://newsapi.org/v2/top-headlines?country=ru&apiKey=d7f41a32c26b4bbfb596d58b1a54c766&roistat_visit=3523472')       
     //   .then((response) => {    
@@ -54,16 +63,16 @@ export default {
     // },
 
 
-    getNews(){
-      this.axios({
-      method: "GET",
-      url: 'https://newsapi.org/v2/top-headlines?country=us8apiKey-d7f41a32c26b4bbfb596d58b1a54c766',
-      }).then( (response) =>{
-        this.news = response.data.articles;
-      })
-    }
+    // getNews(){
+    //   this.axios({
+    //   method: "GET",
+    //   url: 'https://newsapi.org/v2/top-headlines?country=us8apiKey-d7f41a32c26b4bbfb596d58b1a54c766',
+    //   }).then( (response) =>{
+    //     this.news = response.data.articles;
+    //   })
+    // }
     
-  }),
+  },
   mounted(){
     this.getNews();
   }
